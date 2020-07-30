@@ -1,0 +1,60 @@
+version: '3.5'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+    networks:
+      - bubble
+
+  kafka1:
+    image: confluentinc/cp-kafka:5.4.1
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:9092,EXTERNAL://localhost:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    networks:
+      - bubble
+
+  kafka2:
+    image: confluentinc/cp-kafka:5.4.1
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:9092,EXTERNAL://localhost:9095
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+    depends_on:
+      - zookeeper
+    ports:
+      - "9094:9092"
+      - "9095:9093"
+    networks:
+      - bubble
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop:latest
+    environment:
+      KAFKA_BROKERCONNECT: kafka1:9092,kafka2:9092
+      JVM_OPTS: -Xms32M -Xmx64M
+      SERVER_SERVLET_CONTEXTPATH: /
+    ports:
+      - "9000:9000"
+    networks:
+      - bubble
+    depends_on:
+      - kafka1
+      - kafka2
+
+networks:
+  bubble:
+    external: true
