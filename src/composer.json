@@ -1,0 +1,18 @@
+{
+    "name": "lucianocarvalho/kafka-disaster-recovery",
+    "authors": [
+        {
+            "name": "Luciano Carvalho",
+            "email": "luciano_722@hotmail.com"
+        }
+    ],
+    "require": {
+        "enqueue/rdkafka": "^0.10.1",
+        "enqueue/enqueue": "^0.10.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}
