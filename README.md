@@ -35,17 +35,18 @@ For testing purposes, we setup a Kafka cluster with 3 brokers.
 
 To produce and consume messages, we write a simple code using PHP and **[enqueue](https://github.com/php-enqueue)**.
 
-To view cluster settings, topics and messages, we use **[Kafdrop](https://github.com/obsidiandynamics/kafdrop)** and **[Kowl](https://github.com/cloudhut/kowl)**.
+To view cluster settings, topics and messages, we use **[Kafdrop](https://github.com/obsidiandynamics/kafdrop)**, **[Kowl](https://github.com/cloudhut/kowl)** and **[Kafka Manager](https://hub.docker.com/r/sheepkiller/kafka-manager)**.
 
-| About                | Image                       | Internal Port | External Port |
-|----------------------|-----------------------------|---------------|---------------|
-| **Zookeeper**        | `confluentinc/cp-zookeeper` | 2181          | 2181          |
-| **Kafka Broker 1**   | `confluentinc/cp-kafka`     | 9092          | 9093          |
-| **Kafka Broker 2**   | `confluentinc/cp-kafka`     | 9092          | 9094          |
-| **Kafka Broker 3**   | `confluentinc/cp-kafka`     | 9092          | 9096          |
-| **Kafdrop (Web UI)** | `obsidiandynamics/kafdrop`  | 9000          | 9000          |
-| **Kowl (Web UI)**    | `quay.io/cloudhut/kowl`     | 8080          | 8080          |
-| **PHP (worker)**     | `php:7.4-cli`               | -             | -             |
+| About                       | Image                       | Internal Port | External Port |
+|-----------------------------|-----------------------------|---------------|---------------|
+| **Zookeeper**               | `confluentinc/cp-zookeeper` | 2181          | 2181          |
+| **Kafka Broker 1**          | `confluentinc/cp-kafka`     | 9092          | 9093          |
+| **Kafka Broker 2**          | `confluentinc/cp-kafka`     | 9092          | 9094          |
+| **Kafka Broker 3**          | `confluentinc/cp-kafka`     | 9092          | 9096          |
+| **Kafdrop (Web UI)**        | `obsidiandynamics/kafdrop`  | 9000          | 9000          |
+| **Kowl (Web UI)**           | `quay.io/cloudhut/kowl`     | 8080          | 8080          |
+| **Kafka Manager (Web UI)**  | `sheepkiller/kafka-manager` | 9000          | 9001          |
+| **PHP (worker)**            | `php:7.4-cli`               | -             | -             |
 
 ## Quick start
 
@@ -64,7 +65,9 @@ To open Kafdrop, go to **[http://localhost:9000/](http://localhost:9000/)**.
 
 To open Kowl, go to **[http://localhost:8080/](http://localhost:8080/)**.
 
-## How to use
+To open Kafka Manager, go to **[http://localhost:9001/](http://localhost:9001/)**.
+
+## How to use php-worker:
 
 Producers and consumers are implemented at `/src` folder. Feel free to edit the files to suit your tests.
 
@@ -96,7 +99,7 @@ Kafka's internal scripts can also be useful in your tests.
 docker exec -ti <random-kafka-broker-container> bash
 
 # List all topics using kafka-topics
-/usr/bin/kafka-topics --list --zookeeper zookeeper:2181
+kafka-topics --list --zookeeper zookeeper:2181
 ```
 
 **Now, use your creativity :)**

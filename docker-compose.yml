@@ -68,6 +68,7 @@ services:
     depends_on:
       - kafka1
       - kafka2
+      - kafka3
     networks:
       - bubble
 
@@ -83,6 +84,24 @@ services:
     depends_on:
       - kafka1
       - kafka2
+      - kafka3
+    networks:
+      - bubble
+
+  kafka-manager:
+    image: sheepkiller/kafka-manager:latest
+    ports:
+      - "9001:9000"
+    links:
+      - zookeeper
+    depends_on:
+      - kafka1
+      - kafka2
+      - kafka3
+    environment:
+      ZK_HOSTS: zookeeper:2181
+      APPLICATION_SECRET: letmein
+      KM_ARGS: -Djava.net.preferIPv4Stack=true
     networks:
       - bubble
 
