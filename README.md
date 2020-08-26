@@ -20,7 +20,9 @@ But you can use to make some beanchmarks:
 - Max.poll.interval.ms values
 - Cleanup polices
 - Kafka Message Key
-- **Use your creativity :)**
+- [Change some rdkafka configurations](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md)
+
+**Use your creativity :)**
 
 ## About
 
